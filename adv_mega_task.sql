@@ -15,7 +15,10 @@ SELECT
 	st.Name AS teritorija,
     ss.SalesOrderID,
     soh.Status,
-    soh.OnlineOrderFlag
+    CASE 
+		WHEN soh.OnlineOrderFlag = 1 then 'online' 
+        ELSE 'direct'
+	END AS sales_channel
 FROM 
 	production_product pp
 	JOIN production_productsubcategory ps ON ps.ProductSubcategoryID = pp.ProductSubcategoryID

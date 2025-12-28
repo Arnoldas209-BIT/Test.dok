@@ -262,8 +262,8 @@ JOIN person_person p
 JOIN one_address oa
     ON oa.BusinessEntityID = sp.BusinessEntityID
    AND oa.rn = 1
-WHERE sp.TerritoryID IS NOT NULL      -- "gyvena teritorijoje" (turi priskirtą teritoriją)
-  AND sp.SalesYTD <> 0                -- SalesYTD ≠ 0
+WHERE sp.TerritoryID IS NOT NULL      
+  AND sp.SalesYTD <> 0                
 ORDER BY oa.PostalCode;
 
 /*12. Agregacijų kartojimas su Window Functions

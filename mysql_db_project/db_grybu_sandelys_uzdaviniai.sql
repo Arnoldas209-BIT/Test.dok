@@ -219,3 +219,44 @@ FROM batch_quality_actions
 WHERE decision = 'Rejected'
 GROUP BY DATE_FORMAT(action_date, '%Y-%m')
 ORDER BY menuo;
+
+-- 11. Kokie darbuotojai per mėnesį sugeneruoja didžiausią naudą sandėlio ir gamybos procesuose pagal pagrindinius KPI?
+
+SELECT
+    e.first_name,
+    e.last_name,
+    d.name AS skyrius,
+    k.name AS kpi_pavadinimas,
+    ek.period_month,
+    SUM(ek.value) AS kpi_rezultatas,
+    k.unit
+FROM employee_kpi_results ek
+JOIN employees e ON e.employee_id = ek.employee_id
+JOIN kpi_types k ON k.kpi_id = ek.kpi_id
+JOIN employee_departments ed ON ed.employee_id = e.employee_id
+JOIN departments d ON d.department_id = ed.department_id
+WHERE ek.period_month = '2025-12-01'
+GROUP BY
+    e.first_name, e.last_name, d.name, k.name, ek.period_month, k.unit
+ORDER BY
+    kpi_rezultatas DESC;
+    
+    SELECT
+    e.first_name,
+    e.last_name,
+    d.name AS skyrius,
+    k.name AS kpi_pavadinimas,
+    ek.period_month,
+    ek.value,
+    k.unit
+FROM employees e
+LEFT JOIN employee_kpi_results ek 
+    ON ek.employee_id = e.employee_id
+    AND ek.period_month = '2025-12-01'
+LEFT JOIN kpi_types k 
+    ON k.kpi_id = ek.kpi_id
+LEFT JOIN employee_departments ed 
+    ON ed.employee_id = e.employee_id
+LEFT JOIN departments d 
+    ON d.department_id = ed.department_id
+ORDER BY e.last_name;

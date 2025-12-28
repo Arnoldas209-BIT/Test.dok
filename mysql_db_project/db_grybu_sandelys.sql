@@ -386,9 +386,6 @@ INSERT INTO employee_departments VALUES
 INSERT INTO employee_departments VALUES
 (5, 2, 'Fasavimo operatorius');
 
-INSERT INTO employee_departments VALUES
-(1, 1, 'Plant Manager');
-
 UPDATE employee_departments
 SET role = 'Plant Manager'
 WHERE employee_id = 1 AND department_id = 1;
@@ -587,3 +584,9 @@ JOIN batches b ON b.product_id = p.product_id AND b.harvest_date = x.d
 LEFT JOIN products p2 ON p2.display_name = x.downgrade_to
 LEFT JOIN quality_issues qi ON qi.issue_name = x.issue_name;
 
+INSERT INTO kpi_types (name, unit) VALUES
+('Komplektavimo klaidos', 'vnt');
+
+UPDATE employee_departments
+SET role = 'Plant Manager'
+WHERE employee_id = 1 AND department_id = 1;
